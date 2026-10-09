@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= profile.name %>의 프로필</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- 헤더 영역 -->
+    <header class="profile-header">
+      <h1><%= profile.name %></h1>
+      <p class="student-info">학번: <%= profile.studentId %> | 학과: <%= profile.department %></p>
+      <span class="mbti-badge">MBTI: <%= profile.mbti.toUpperCase() %></span>
+      <p class="intro"><%= profile.intro %></p>
+    </header>
+
+    <!-- 수강 과목 목록 섹션 -->
+    <section class="card">
+      <h2> 수강 과목 목록</h2>
+      <div class="table-responsive">
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>요일</th>
+              <th>시간</th>
+              <th>과목명</th>
+              <th>강의실</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% profile.timetable.forEach(item => { %>
+              <tr class="<%= item.isCurrent ? 'highlight' : '' %>">
+                <td><%= item.day %></td>
+                <td><%= item.time %></td>
+                <td class="subject-name"><%= item.subject %></td>
+                <td><%= item.location %></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 취미 섹션 -->
+    <section class="card">
+      <h2> 취미 (Hobbies)</h2>
+      <div class="card-grid">
+        <% profile.hobbies.forEach(item => { %>
+          <div class="grid-item">
+            <img src="<%= item.img %>" alt="<%= item.title %>" class="item-img" onerror="this.src='https://via.placeholder.com/150'">
+            <div class="item-info">
+              <h3><%= item.title %></h3>
+              <p><%= item.desc %></p>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </section>
+
+    <!-- 좋아하는 음식 섹션 -->
+    <section class="card">
+      <h2> 좋아하는 음식 (Favorite Foods)</h2>
+      <div class="card-grid">
+        <% profile.favoriteFoods.forEach(item => { %>
+          <div class="grid-item">
+            <img src="<%= item.img %>" alt="<%= item.name %>" class="item-img" onerror="this.src='https://via.placeholder.com/150'">
+            <div class="item-info">
+              <h3><%= item.name %></h3>
+              <p><%= item.desc %></p>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </section>
+
+    <!-- Contact 푸터 -->
+    <footer class="contact-info">
+      <h2>Contact</h2>
+      <p>Email: <%= profile.contact.email %></p>
+      <p>GitHub: <a href="<%= profile.contact.github %>" target="_blank"><%= profile.contact.github %></a></p>
+    </footer>
+  </div>
+</body>
+</html>
